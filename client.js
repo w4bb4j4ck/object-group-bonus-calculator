@@ -41,3 +41,88 @@ const employees = [
 // Ask questions when you don't.
 
 console.log( employees );
+const maxBonus = 0.13;
+
+function bonusPercentage(employee){
+  let percentage = 0;
+  switch(employee.reviewRating){
+    case 3:
+      percentage = 0.04;
+      break;
+    case 4:
+      percentage = 0.06;
+      break;
+    case 5:
+      percentage = 0.1;
+      break;
+  }
+  return percentage;
+}
+
+function senior(employee){
+  if(employee.employeeNumber.length === 4){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+function incomeCount(employee){
+  if(Number(employee.annualSalary) >= 65000){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+function calculateTotalCompensation(employee){
+  let total = 0;
+  let percentage = bonusPercentage(employee);
+  let totalPercentage = percentage;
+  const seniorityBonus = 0.05;
+  if(senior(employee)){
+    totalPercentage += seniorityBonus;
+  }
+  if(incomeCount(employee)){
+    totalPercentage -= 0.01;
+  }
+  if(totalPercentage > maxBonus){
+    totalPercentage = maxBonus;
+  }
+  if(totalPercentage < 0){
+    totalPercentage = 0;
+  }
+  switch(percentage){
+    case 0:
+      total = Number(employee.annualSalary) + Number(employee.annualSalary)*totalPercentage;
+      break;
+    case 0.04:
+      total = Number(employee.annualSalary) + Number(employee.annualSalary)*totalPercentage;
+      break;
+    case 0.06:
+      total = Number(employee.annualSalary) + Number(employee.annualSalary)*totalPercentage;
+      break;
+    case 0.1:
+      total = Number(employee.annualSalary) + Number(employee.annualSalary)*totalPercentage;
+      break;
+  }
+  return total;
+}
+
+function constructor(name, bonusPercentage, totalCompensation, totalBonus){
+  let obj = {name: name, bonusPercentage: bonusPercentage, totalCompensation: totalCompensation, totalBonus:totalBonus};
+  return obj;
+}
+
+function bonus(employee){
+  let obj = constructor(employee.name, bonusPercentage(employee), calculateTotalCompensation(employee), Math.round(calculateTotalCompensation(employee)));
+  return obj;
+}
+
+console.log(bonus(employees[0]));
+console.log(bonus(employees[1]));
+console.log(bonus(employees[2]));
+console.log(bonus(employees[3]));
+console.log(bonus(employees[4]));
